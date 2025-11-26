@@ -2,14 +2,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import github from "../Icons/Github.svg"
-import twitter from "../Icons/Twitter.svg"
+import github from "@/Icons/Github.svg"
+import twitter from "@/Icons/Twitter.svg"
 const Navbar = () => {
     return (
         <div className="w-[99.7%] py-4  fixed top-0 backdrop-blur-sm  border-b-1 border-gray-800 z-[100] flex items-center px-20 justify-between ">
             <div className="flex justify-between gap-20">
                 <Link href="/">
-                    <Image src="/logoipsum-custom-logo.svg" alt="logo" width={140} height={50} className="cursor-pointer" />
+                    <Image src="/ElevateUI.svg" alt="logo" width={140} height={50} className="cursor-pointer" />
                 </Link>
 
             </div>

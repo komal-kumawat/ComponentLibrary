@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
-
+import Sidebar from "./Sidebar";
+import Button from "../ui/Button";
 const Main = () => {
   const [previewOrCode, setPreviewOrCode] = useState("Preview");
 
@@ -17,7 +18,7 @@ export default function Page() {
 `;
 
   return (
-    <div className="flex flex-col items-center h-full pt-20">
+    <div className="flex flex-col items-center w-full h-full pt-20">
       <div className="overflow-y-auto h-full w-full px-10">
         <h1 className="font-bold text-[40px] cursor-pointer py-3">
           Animated Form
@@ -32,22 +33,20 @@ export default function Page() {
         <div className="flex gap-4 my-2 mt-6 text-sm font-bold transition-colors duration-[300ms]">
           <button
             onClick={() => setPreviewOrCode("Preview")}
-            className={`px-3 py-1.5 rounded-md transition-colors duration-300 ${
-              previewOrCode === "Preview"
+            className={`px-3 py-1.5 rounded-md transition-colors duration-300 ${previewOrCode === "Preview"
                 ? "bg-blue-600 text-white"
                 : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-            }`}
+              }`}
           >
             Preview
           </button>
 
           <button
             onClick={() => setPreviewOrCode("Code")}
-            className={`px-3 py-1.5 rounded-md transition-colors duration-300 ${
-              previewOrCode === "Code"
+            className={`px-3 py-1.5 rounded-md transition-colors duration-300 ${previewOrCode === "Code"
                 ? "bg-blue-600 text-white"
                 : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-            }`}
+              }`}
           >
             Code
           </button>
@@ -58,7 +57,8 @@ export default function Page() {
           {previewOrCode === "Preview" ? (
             <div>
               <pre className="bg-[#0d0d0d] text-[#e5e5e5] p-4 border border-gray-700 rounded-lg text-sm overflow-x-auto">
-                <code>Preview Component Goes Here</code>
+                  <Button/>
+
               </pre>
             </div>
           ) : (
