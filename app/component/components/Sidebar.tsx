@@ -2,10 +2,11 @@
 import Link from "next/link";
 import React, { useState } from "react";
 interface sidebarprops {
-    sidebarComp?: { name: string  , slug:string}[];
-    activeComp: string | undefined;
-    setActiveComp: (name: string ) => void;
+    sidebarComp?: { name: string; slug: string }[];
+    activeComp?: string; // allow undefined
+    setActiveComp: (name?: string) => void; // allow undefined
 }
+
 
 const Sidebar: React.FC<sidebarprops> = ({
     sidebarComp, activeComp, setActiveComp

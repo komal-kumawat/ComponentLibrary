@@ -16,7 +16,7 @@ interface ComponentMeta {
     name: string;
     slug: string;
     preview?: React.ReactNode;
-    code?: string;
+    code: string;
     description?: string;
     props?: ComponentProp[];
 }
@@ -254,15 +254,16 @@ const page = ({ params }: { params: Promise<{ slug: string }> }) => {
     if (!comp) {
         notFound;
     }
-    const [copied, setCopied] = useState(false);
-    const [activeComp, setActiveComp] = useState("Button");
+    const [copied, setCopied] = useState<boolean>(false);
+    const [activeComp, setActiveComp] = useState<string | undefined>("Button");
 
     useEffect(() => {
-        setActiveComp(comp?.name);
-    }, [slug])
+    setActiveComp(comp?.name);
+}, [slug, comp]);
+
 
     const handleCopy = async () => {
-        await navigator.clipboard.writeText(comp?.code);
+        await navigator.clipboard.writeText(comp?.code || "");
         setCopied(true);
 
         setTimeout(() => setCopied(false), 1500);
@@ -293,9 +294,9 @@ const page = ({ params }: { params: Promise<{ slug: string }> }) => {
                         <h3 className="font-bold text-2xl py-2 uppercase">Code</h3>
                         <CodeBlock
                             language="tsx"
-                            filename="button"
+                            filename={`${comp?.name}`}
                             highlightLines={[9, 13, 14, 18]}
-                            code={comp?.code}
+                            code={comp?.code || ""}
                         />
 
                     </div>
