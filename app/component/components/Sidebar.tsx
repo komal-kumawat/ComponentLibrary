@@ -4,7 +4,7 @@ import React, { useState } from "react";
 interface sidebarprops {
     sidebarComp?: { name: string  , slug:string}[];
     activeComp: string | undefined;
-    setActiveComp: (slug: string ) => void;
+    setActiveComp: (name: string ) => void;
 }
 
 const Sidebar: React.FC<sidebarprops> = ({
