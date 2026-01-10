@@ -8,62 +8,46 @@ interface sidebarprops {
 }
 
 const Sidebar: React.FC<sidebarprops> = ({
-    sidebarComp, activeComp , setActiveComp
+    sidebarComp, activeComp, setActiveComp
 }) => {
 
-    const SidebarComp = [
-        {
-            heading: "COMPONENTS",
-            items: [
-                { name: "Button", link: "/component/button" },
-                { name: "Card", link: "/component/card" },
-                { name: "Input", link: "/component/input" },
 
-            ]
-        },
-
-    ];
 
     return (
         <div className=" border-r border-gray-800 h-full pt-20 w-full flex ">
 
             <div className="overflow-y-auto h-full w-full  flex flex-col  p-5 gap-8">
                 <div className="flex text-left flex-col gap-8" >
-                    {SidebarComp.map((section, index) => (
-                        <div key={index} className="w-full">
-                            <Link href="/component/button">
-                                <h3 className="text-gray-200 font-bold text-lg uppercase tracking-wide mb-2">
-                                    {section.heading}
-                                </h3>
-                            </Link>
+                    <h3 className="text-gray-200 font-bold text-lg uppercase tracking-wide mb-2">
+                        COMPONENTS
+                    </h3>
 
 
-                            <div className="flex flex-col text-left text-gray-300 text-md font-bold  w-full">
-                                {section.items.map((item, idx) => (
-                                    <Link
-                                        key={idx}
-                                        href={item.link}
-                                        onClick={() => setActiveComp(item.name)}
+                    <div className="flex flex-col text-left text-gray-300 text-md font-bold  w-full">
+                        {sidebarComp?.map((item, idx) => (
+                            <Link
+                                key={idx}
+                                href={`/component/${item?.slug}`}
+                                onClick={() => setActiveComp(item.name)}
 
-                                        className={`px-2 py-1 m-1 rounded 
+                                className={`px-2 py-1 m-1 rounded 
                                                 ${activeComp === item.name
-                                                ? " border-1 border-gray-100 text-white font-semibold transition-smooth duration-300"
-                                                : "text-gray-300 hover:text-white"
-                                            }`}
+                                        ? " border-1 border-gray-100 text-white font-semibold transition-smooth duration-300"
+                                        : "text-gray-300 hover:text-white"
+                                    }`}
 
-                                    >
-                                        {item.name}
-                                    </Link>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
-
-
+                            >
+                                {item.name}
+                            </Link>
+                        ))}
+                    </div>
                 </div>
+
+
+
             </div>
 
-        </div>
+        </div >
     )
 }
 

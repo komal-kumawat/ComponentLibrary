@@ -1,12 +1,11 @@
 "use client"
 import Navbar from "@/app/component/components/Navbar";
 import Sidebar from "@/app/component/components/Sidebar";
-import Button from "../ui/Button";
 import Link from "next/link";
 import { use, useEffect, useState } from "react";
 import { notFound } from "next/navigation";
-import { BiCodeBlock } from "react-icons/bi";
-import CodeBlock from "../components/CodeBlock";
+import { CodeBlock } from "../ui/code-block";
+import { Button } from "../ui/Button";
 interface ComponentProp {
     name: string;
     type: string;
@@ -24,60 +23,232 @@ interface ComponentMeta {
 }
 
 const components: ComponentMeta[] = [
-    {
-        name: "Button",
-        slug: "button",
-        description: "Button component with  variants and size.",
-        preview: (
+  {
+    name: "Button",
+    slug: "button",
+    description: "Button component with variants and sizes.",
+    preview: (
       <div className="flex gap-3 flex-wrap items-center">
         <Button>Default</Button>
+        <Button variant="outline">Outline</Button>
+        <Button size="sm">Small</Button>
       </div>
-      
-        ),
-        code: `// button.tsx\nimport { cva } from "class-variance-authority";\nimport { cn } from "./utils";\n\nconst buttonVariants = cva(\n  "inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none",\n  {\n    variants: {\n      variant: {\n        default: "bg-blue-600 text-white hover:bg-blue-700",\n        outline: "border border-gray-300 hover:bg-gray-100",\n      },\n      size: {\n        sm: "px-3 py-1.5 text-sm",\n        md: "px-4 py-2 text-base",\n      },\n    },\n    defaultVariants: { variant: "default", size: "md" },\n  }\n);\n\nexport const Button = ({ className, variant, size, ...props }) => (\n  <button className={cn(buttonVariants({ variant, size }), className)} {...props} />\n);`,
-        props: [
-            {
-                name: "variant",
-                type: '"default" | "outline"',
-                default: '"default"',
-                description: "Visual style of the button.",
-            },
-            {
-                name: "size",
-                type: '"default" | "sm"',
-                default: '"default"',
-                description: "Size of the button.",
-            },
-            {
-                name: "disabled",
-                type: "boolean",
-                default: "false",
-                description: "Disable the button.",
-            },
-            {
-                name: "className",
-                type: "string",
-                description: "Additional CSS classes.",
-            },
-            {
-                name: "children",
-                type: "React.ReactNode",
-                description: "Button content.",
-            },
-        ],
-    },
-    {
-        name: "Card",
-        slug: "card",
-        description: "card component"
-    }
-    ,{
-        name: "Input",
-        slug: "input",
-        description: "Input component"
-    }
+    ),
+    code: `// button.tsx
+import { cn } from "@/lib/utils";
+import { cva } from "class-variance-authority";
 
-]
+const buttonVariants = cva(
+  "inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none",
+  {
+    variants: {
+      variant: {
+        default: "bg-blue-600 text-white hover:bg-blue-700",
+        outline: "border border-gray-300 hover:bg-gray-100",
+      },
+      size: {
+        sm: "px-3 py-1.5 text-sm",
+        md: "px-4 py-2 text-base",
+      },
+    },
+    defaultVariants: { variant: "default", size: "md" },
+  }
+);
+
+export const Button = ({ className, variant, size, ...props }) => (
+  <button
+    className={cn(buttonVariants({ variant, size }), className)}
+    {...props}
+  />
+);`,
+    props: [
+      {
+        name: "variant",
+        type: `"default" | "outline"`,
+        default: `"default"`,
+        description: "Visual style of the button.",
+      },
+      {
+        name: "size",
+        type: `"sm" | "md"`,
+        default: `"md"`,
+        description: "Size of the button.",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        default: "false",
+        description: "Disables the button.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Additional CSS classes.",
+      },
+      {
+        name: "children",
+        type: "React.ReactNode",
+        description: "Button content.",
+      },
+    ],
+  },
+
+  {
+    name: "Card",
+    slug: "card",
+    description: "Simple card layout component.",
+    preview: (
+      <div className="w-64 rounded-lg border p-4 shadow-sm">
+        <h3 className="font-semibold">Card Title</h3>
+        <p className="text-sm text-gray-600">This is a card preview.</p>
+      </div>
+    ),
+    code: `// card.tsx
+export const Card = ({ children }) => (
+  <div className="rounded-lg border p-4 shadow-sm">
+    {children}
+  </div>
+);`,
+    props: [
+      {
+        name: "children",
+        type: "React.ReactNode",
+        description: "Content inside the card.",
+      },
+    ],
+  },
+
+  {
+    name: "Input",
+    slug: "input",
+    description: "Styled input field.",
+    preview: (
+      <input
+        type="text"
+        placeholder="Enter text..."
+        className="w-64 rounded-md border px-3 py-2 text-sm"
+      />
+    ),
+    code: `// input.tsx
+export const Input = (props) => (
+  <input
+    className="rounded-md border px-3 py-2 text-sm"
+    {...props}
+  />
+);`,
+    props: [
+      {
+        name: "type",
+        type: "string",
+        default: `"text"`,
+        description: "Input type.",
+      },
+      {
+        name: "placeholder",
+        type: "string",
+        description: "Placeholder text.",
+      },
+      {
+        name: "value",
+        type: "string",
+        description: "Input value.",
+      },
+      {
+        name: "onChange",
+        type: "(e) => void",
+        description: "Change handler.",
+      },
+    ],
+  },
+
+  {
+    name: "Badge",
+    slug: "badge",
+    description: "Small badge component.",
+    preview: (
+      <div className="flex gap-2">
+        <span className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
+          Success
+        </span>
+        <span className="rounded-full bg-red-100 px-3 py-1 text-sm text-red-700">
+          Error
+        </span>
+      </div>
+    ),
+    code: `// badge.tsx
+export const Badge = ({ children }) => (
+  <span className="rounded-full px-3 py-1 text-sm">
+    {children}
+  </span>
+);`,
+    props: [
+      {
+        name: "children",
+        type: "React.ReactNode",
+        description: "Badge content.",
+      },
+    ],
+  },
+
+  {
+    name: "Alert",
+    slug: "alert",
+    description: "Alert message component.",
+    preview: (
+      <div className="w-72 rounded-md border-l-4 border-yellow-500 bg-yellow-50 p-4 text-sm text-yellow-800">
+        ⚠️ This is an alert message
+      </div>
+    ),
+    code: `// alert.tsx
+export const Alert = ({ children }) => (
+  <div className="border-l-4 bg-yellow-50 p-4">
+    {children}
+  </div>
+);`,
+    props: [
+      {
+        name: "children",
+        type: "React.ReactNode",
+        description: "Alert message.",
+      },
+    ],
+  },
+
+  {
+    name: "Avatar",
+    slug: "avatar",
+    description: "User avatar component.",
+    preview: (
+      <img
+        src="https://i.pravatar.cc/80"
+        alt="Avatar"
+        className="h-12 w-12 rounded-full"
+      />
+    ),
+    code: `// avatar.tsx
+export const Avatar = ({ src, alt }) => (
+  <img
+    className="h-12 w-12 rounded-full"
+    src={src}
+    alt={alt}
+  />
+);`,
+    props: [
+      {
+        name: "src",
+        type: "string",
+        description: "Image source URL.",
+      },
+      {
+        name: "alt",
+        type: "string",
+        description: "Alt text for the image.",
+      },
+    ],
+  },
+];
+
+
 const page = ({ params }: { params: Promise<{ slug: string }> }) => {
     const { slug } = use(params);
     const comp = components.find(c => c.slug === slug);
@@ -85,11 +256,11 @@ const page = ({ params }: { params: Promise<{ slug: string }> }) => {
         notFound;
     }
     const [copied, setCopied] = useState(false);
-    const [activeComp , setActiveComp] = useState("Button");
+    const [activeComp, setActiveComp] = useState("Button");
 
-    useEffect(()=>{
+    useEffect(() => {
         setActiveComp(comp?.name);
-    } , [slug])
+    }, [slug])
 
     const handleCopy = async () => {
         await navigator.clipboard.writeText(comp.code);
@@ -104,7 +275,7 @@ const page = ({ params }: { params: Promise<{ slug: string }> }) => {
             <Navbar />
             <div className='flex mt-10 h-[calc(100vh-20px)]'>
                 <div className='hidden md:flex md:w-[30%] lg:w-[20%]  h-full overflow-y-auto'>
-                    <Sidebar  activeComp={activeComp} setActiveComp={setActiveComp} sidebarComp={components}/>
+                    <Sidebar activeComp={activeComp} setActiveComp={setActiveComp} sidebarComp={components} />
 
 
                 </div>
@@ -121,7 +292,13 @@ const page = ({ params }: { params: Promise<{ slug: string }> }) => {
                     </div>
                     <div>
                         <h3 className="font-bold text-2xl py-2 uppercase">Code</h3>
-                        <CodeBlock code={comp?.code} />
+                        <CodeBlock
+                            language="jsx"
+                            filename="button"
+                            highlightLines={[9, 13, 14, 18]}
+                            code={comp?.code}
+                        />
+
                     </div>
                     {/* Props Table */}
                     <section className="mb-20">
