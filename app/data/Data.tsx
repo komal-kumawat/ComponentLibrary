@@ -2,6 +2,8 @@ import React from "react";
 import { Button } from "../component/ui/Button";
 import InteractiveGlowBackground from "../component/ui/InteractiveGlowBackground";
 import FluidSimulation from "../component/ui/FluidSimulation";
+import MagneticButton from "../component/ui/MagneticButton";
+import SpotlightCard from "../component/ui/SpotlightCard";
 
 export interface ComponentProp {
   name: string;
@@ -426,6 +428,109 @@ export default function FluidSimulation({ color = "#4F46E5" }) {
     },
   ],
 }
+,
+{
+  name: "MagneticButton",
+  slug: "magneticbutton",
+  description: "Interactive button that subtly follows the cursor for a premium magnetic hover effect.",
+  preview: (
+    <div className="flex justify-center p-10">
+      <MagneticButton>Hover Me</MagneticButton>
+    </div>
+  ),
+  code: `"use client";
+import { useRef } from "react";
+
+export default function MagneticButton({ children }) {
+  const ref = useRef(null);
+
+  const handleMouseMove = (e) => {
+    const rect = ref.current.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+
+    ref.current.style.transform = \`translate(\${x * 0.2}px, \${y * 0.2}px)\`;
+  };
+
+  const reset = () => {
+    ref.current.style.transform = "translate(0px, 0px)";
+  };
+
+  return (
+    <button
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={reset}
+      className="px-6 py-3 bg-indigo-600 text-white rounded-lg transition-transform duration-200 ease-out hover:bg-indigo-700"
+    >
+      {children}
+    </button>
+  );
+}
+`,
+  props: [
+    {
+      name: "children",
+      type: "React.ReactNode",
+      description: "Button content.",
+    },
+  ],
+}
+,
+{
+  name: "SpotlightCard",
+  slug: "spotlightcard",
+  description: "Card with dynamic spotlight effect that follows cursor movement.",
+  preview: (
+    <div className="p-10">
+      <SpotlightCard>
+        <h3 className="text-xl font-bold">Interactive Card</h3>
+        <p className="text-neutral-400 mt-2">
+          Move your mouse around.
+        </p>
+      </SpotlightCard>
+    </div>
+  ),
+  code: `"use client";
+import { useRef } from "react";
+
+export default function SpotlightCard({ children }) {
+  const ref = useRef(null);
+
+  const handleMouseMove = (e) => {
+    const rect = ref.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    ref.current.style.setProperty("--x", \`\${x}px\`);
+    ref.current.style.setProperty("--y", \`\${y}px\`);
+  };
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      className="relative rounded-xl border border-neutral-800 p-6 bg-neutral-900 overflow-hidden"
+      style={{
+        background:
+          "radial-gradient(600px circle at var(--x) var(--y), rgba(99,102,241,0.2), transparent 40%)",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+`,
+  props: [
+    {
+      name: "children",
+      type: "React.ReactNode",
+      description: "Card content.",
+    },
+  ],
+}
+
+
 
 
 
