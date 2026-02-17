@@ -12,6 +12,7 @@ const page = () => {
   return (
     <div>
       <Navbar />
+
       <div className=' font-bold flex flex-col items-center justify-center h-[100vh] w-full'>
         <h1 className='text-6xl m-8 text-gray-300'>Build Higher With ElevateUI</h1>
         <p className='text-xl text-gray-500 '>Craft unique, polished interfaces.

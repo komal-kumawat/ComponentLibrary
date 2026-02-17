@@ -7,6 +7,7 @@ import shadcn from "@/Icons/shadcn.svg";
 import Image from 'next/image';
 import tailwind from "@/Icons/tailwindcss.svg"
 import motion from "@/Icons/Motion.svg"
+import FluidSimulation from './ui/FluidSimulation';
 const page = () => {
   return (
     <div>
