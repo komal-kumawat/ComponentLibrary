@@ -4,6 +4,7 @@ import InteractiveGlowBackground from "../component/ui/InteractiveGlowBackground
 import FluidSimulation from "../component/ui/FluidSimulation";
 import MagneticButton from "../component/ui/MagneticButton";
 import SpotlightCard from "../component/ui/SpotlightCard";
+import TiltCard from "../component/ui/TiltCard";
 
 export interface ComponentProp {
   name: string;
@@ -515,6 +516,60 @@ export default function SpotlightCard({ children }) {
         background:
           "radial-gradient(600px circle at var(--x) var(--y), rgba(99,102,241,0.2), transparent 40%)",
       }}
+    >
+      {children}
+    </div>
+  );
+}
+`,
+  props: [
+    {
+      name: "children",
+      type: "React.ReactNode",
+      description: "Card content.",
+    },
+  ],
+}
+,
+{
+  name: "TiltCard",
+  slug: "tiltcard",
+  description: "3D interactive tilt card that rotates based on cursor position.",
+  preview: (
+    <div className="flex justify-center p-10">
+      <TiltCard>
+        <h3 className="text-xl font-bold">3D Card</h3>
+      </TiltCard>
+    </div>
+  ),
+  code: `"use client";
+import { useRef } from "react";
+
+export default function TiltCard({ children }) {
+  const ref = useRef(null);
+
+  const handleMouseMove = (e) => {
+    const rect = ref.current.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+
+    const rotateX = -(y / rect.height) * 15;
+    const rotateY = (x / rect.width) * 15;
+
+    ref.current.style.transform = \`rotateX(\${rotateX}deg) rotateY(\${rotateY}deg)\`;
+  };
+
+  const reset = () => {
+    ref.current.style.transform = "rotateX(0deg) rotateY(0deg)";
+  };
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={reset}
+      className="w-64 h-40 flex items-center justify-center bg-neutral-900 border border-neutral-800 rounded-xl transition-transform duration-200 ease-out"
+      style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
     >
       {children}
     </div>
